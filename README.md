@@ -25,7 +25,7 @@ Git Updater is capable of returning a [REST endpoint](https://git-updater.com/kn
 The REST endpoint format is as follows.
 
 * plugins - `https://my-site.com//wp-json/git-updater/v1/plugins-api/?slug=my-plugin`
-* themes - `https://my-site.com//wp-json/git-updater/v1/themess-api/?slug=my-theme`
+* themes - `https://my-site.com//wp-json/git-updater/v1/themes-api/?slug=my-theme`
 
 ## Installation
 
@@ -39,3 +39,5 @@ Add the following to your plugin or theme where `<URI>` is the REST endpoint.
  require_once __DIR__ . '/vendor/autoload.php';
  ( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run(`<URI>`);
 ```
+
+An example integrated plugin is here, https://github.com/afragen/test-plugin-gu-lite
