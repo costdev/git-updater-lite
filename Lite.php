@@ -34,7 +34,13 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 * Constructor.
 		 */
 		public function __construct( string $file_path ) {
-			$this->file          = basename( dirname( $file_path ) ) . '/' . basename( $file_path );
+			if ( \str_contains( $file_path, 'functions.php' ) ) {
+				$file_path  = dirname( $file_path ) . '/style.css';
+				$this->file = \basename( dirname( $file_path ) );
+			} else {
+				$this->file = basename( dirname( $file_path ) ) . '/' . basename( $file_path );
+			}
+
 			$this->local_version = get_file_data( $file_path, array( 'Version' => 'Version' ) )['Version'];
 		}
 
