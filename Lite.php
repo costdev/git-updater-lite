@@ -62,13 +62,19 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		/**
 		 * Correctly rename dependency for activation.
 		 *
-		 * @param string $source        Path fo $source.
-		 * @param string $remote_source Path of $remote_source.
+		 * @param string                           $source        Path fo $source.
+		 * @param string                           $remote_source Path of $remote_source.
+		 * @param \Plugin_Upgrader|\Theme_Upgrader $upgrader      An Upgrader object.
+		 * @param array                            $hook_extra    Array of hook data.
 		 *
 		 * @return string $new_source
 		 */
-		public function upgrader_source_selection( string $source, string $remote_source ) {
+		public function upgrader_source_selection( string $source, string $remote_source, \Plugin_Upgrader|\Theme_Upgrader $upgrader, $hook_extra = null ) {
 			global $wp_filesystem;
+
+			if ( isset( $hook_extra['action'] ) && 'install' === $hook_extra['action'] ) {
+				return $source;
+			}
 
 			$new_source = trailingslashit( $remote_source ) . $this->api_data->slug;
 			$wp_filesystem->move( $source, $new_source, true );
