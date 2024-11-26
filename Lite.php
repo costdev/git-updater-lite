@@ -156,10 +156,14 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 					'requires'     => $this->api_data->requires,
 					'requires_php' => $this->api_data->requires_php,
 				);
-				$transient->response[ $this->api_data->file ] = (object) array_merge( $response, $response_api_checked );
+				$response                                     = array_merge( $response, $response_api_checked );
+				$response                                     = 'plugin' === $this->api_data->type ? (object) $response : $response;
+				$transient->response[ $this->api_data->file ] = $response;
 			} else {
+				$response = 'plugin' === $this->api_data->type ? (object) $response : $response;
+
 				// Add repo without update to $transient->no_update for 'View details' link.
-				$transient->no_update[ $this->api_data->file ] = (object) $response;
+				$transient->no_update[ $this->api_data->file ] = $response;
 			}
 
 			return $transient;
