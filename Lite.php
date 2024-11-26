@@ -52,13 +52,13 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 * @return void
 		 */
 		public function run( string $url ) {
-			$response = get_site_transient( 'git-updater-lite' );
+			$response = get_site_transient( "git-updater-lite_{$this->file}" );
 			if ( ! $response ) {
 				$response = wp_remote_get( $url );
 				if ( is_wp_error( $response ) ) {
 					return;
 				}
-				set_site_transient( 'git-updater-lite', $response, 6 * \HOUR_IN_SECONDS );
+				set_site_transient( "git-updater-lite_{$this->file}", $response, 6 * \HOUR_IN_SECONDS );
 			}
 
 			$this->api_data       = json_decode( wp_remote_retrieve_body( $response ) );
