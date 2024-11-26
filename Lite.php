@@ -107,6 +107,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				return $result;
 			}
 
+			// Exit if not our repo.
 			if ( $response->slug !== $this->api_data->slug ) {
 				return $result;
 			}
