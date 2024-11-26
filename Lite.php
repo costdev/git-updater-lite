@@ -60,7 +60,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 			$type                 = $this->api_data->type;
 
 			add_filter( 'upgrader_source_selection', array( $this, 'upgrader_source_selection' ), 10, 4 );
-			add_filter( "{$type}s_api", array( $this, 'repo_api_details' ), 99, 2 );
+			add_filter( "{$type}s_api", array( $this, 'repo_api_details' ), 99, 3 );
 			add_filter( "site_transient_update_{$type}s", array( $this, 'update_site_transient' ), 15, 1 );
 		}
 
@@ -96,15 +96,21 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		/**
 		 * Put changelog in plugins_api, return WP.org data as appropriate
 		 *
-		 * @param bool   $result   Default false.
-		 * @param string $action   The type of information being requested from the Plugin Installation API.
+		 * @param bool      $result   Default false.
+		 * @param string    $action   The type of information being requested from the Plugin Installation API.
+		 * @param \stdClass $response Repo API arguments.
 		 *
-		 * @return \stdClass
+		 * @return \stdClass|bool
 		 */
-		public function repo_api_details( $result, $action ) {
+		public function repo_api_details( bool $result, string $action, \stdClass $response ) {
 			if ( ! ( 'plugin_information' === $action ) ) {
 				return $result;
 			}
+
+			if ( $response->slug !== $this->api_data->slug ) {
+				return $result;
+			}
+
 			$this->api_data->sections = (array) $this->api_data->sections;
 
 			return $this->api_data;
