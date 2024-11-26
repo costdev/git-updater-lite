@@ -66,7 +66,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 			$type                 = $this->api_data->type;
 
 			add_filter( 'upgrader_source_selection', array( $this, 'upgrader_source_selection' ), 10, 4 );
-			add_filter( "{$type}s_api", array( $this, 'repo_api_details' ), 99, 3 );
+			add_filter( 'plugins_api', array( $this, 'repo_api_details' ), 99, 3 );
 			add_filter( "site_transient_update_{$type}s", array( $this, 'update_site_transient' ), 15, 1 );
 		}
 
@@ -109,7 +109,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 * @return \stdClass|bool
 		 */
 		public function repo_api_details( bool $result, string $action, \stdClass $response ) {
-			if ( ! ( 'plugin_information' === $action ) ) {
+			if ( 'plugin_information' !== $action ) {
 				return $result;
 			}
 
