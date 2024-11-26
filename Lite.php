@@ -88,13 +88,25 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				return $source;
 			}
 
-			// Exit if not our update.
-			if ( isset( $hook_extra['temp_backup'] ) && $hook_extra['temp_backup']['slug'] !== $this->api_data->slug ) {
-				return $source;
+			// Rename plugins.
+			if ( $upgrader instanceof \Plugin_Upgrader ) {
+				if ( isset( $hook_extra['plugin'] ) ) {
+					$slug       = dirname( $hook_extra['plugin'] );
+					$new_source = trailingslashit( $remote_source ) . $slug;
+				}
 			}
 
-			$new_source = trailingslashit( $remote_source ) . $this->api_data->slug;
-			$wp_filesystem->move( $source, $new_source, true );
+			// Rename themes.
+			if ( $upgrader instanceof \Theme_Upgrader ) {
+				if ( isset( $hook_extra['theme'] ) ) {
+					$slug       = $hook_extra['theme'];
+					$new_source = trailingslashit( $remote_source ) . $slug;
+				}
+			}
+
+			if ( trailingslashit( strtolower( $source ) ) !== trailingslashit( strtolower( $new_source ) ) ) {
+				$wp_filesystem->move( $source, $new_source, true );
+			}
 
 			return trailingslashit( $new_source );
 		}
