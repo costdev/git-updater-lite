@@ -27,6 +27,6 @@
   "prefer-stable": true,
   "require": {
     "php": ">=7.4",
-    "afragen/autoloader": "dev-master"
+    "afragen/autoloader": "^3"
   }
 }
