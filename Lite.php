@@ -120,7 +120,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 *
 		 * @return \stdClass|bool
 		 */
-		public function repo_api_details( bool $result, string $action, \stdClass $response ) {
+		public function repo_api_details( $result, string $action, \stdClass $response ) {
 			if ( 'plugin_information' !== $action ) {
 				return $result;
 			}
