@@ -22,13 +22,13 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 	class Lite {
 
 		/** @var string */
-		public $file;
+		protected $file;
 
 		/** @var string */
-		public $local_version;
+		protected $local_version;
 
 		/** @var \stdClass */
-		public $api_data;
+		protected $api_data;
 
 		/**
 		 * Constructor.
