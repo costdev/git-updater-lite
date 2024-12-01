@@ -25,8 +25,8 @@ Git Updater is capable of returning a [REST endpoint](https://git-updater.com/kn
 
 The REST endpoint format is as follows.
 
-* plugins - `https://my-site.com//wp-json/git-updater/v1/plugins-api/?slug=my-plugin`
-* themes - `https://my-site.com//wp-json/git-updater/v1/themes-api/?slug=my-theme`
+* plugins - `https://my-site.com/wp-json/git-updater/v1/plugins-api/?slug=my-plugin`
+* themes - `https://my-site.com/wp-json/git-updater/v1/themes-api/?slug=my-theme`
 
 ## Installation
 
