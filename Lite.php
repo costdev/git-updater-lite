@@ -110,7 +110,6 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				return $source;
 			}
 
-
 			// Rename plugins.
 			if ( $upgrader instanceof \Plugin_Upgrader ) {
 				if ( isset( $hook_extra['plugin'] ) ) {
@@ -125,6 +124,10 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 					$slug       = $hook_extra['theme'];
 					$new_source = trailingslashit( $remote_source ) . $slug;
 				}
+			}
+
+			if ( basename( $source ) === $slug ) {
+				return $source;
 			}
 
 			if ( trailingslashit( strtolower( $source ) ) !== trailingslashit( strtolower( $new_source ) ) ) {
