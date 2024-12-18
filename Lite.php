@@ -61,7 +61,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				set_site_transient( "git-updater-lite_{$this->file}", $response, 6 * \HOUR_IN_SECONDS );
 			}
 
-			$this->api_data = json_decode( wp_remote_retrieve_body( $response ) );
+				$this->api_data = (object) json_decode( wp_remote_retrieve_body( $response ), true );
 			if ( null === $this->api_data ) {
 				return new \WP_Error( 'non_json_api_response', 'Poorly formed JSON', $response );
 			}
@@ -152,8 +152,6 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 			if ( $response->slug !== $this->api_data->slug ) {
 				return $result;
 			}
-
-			$this->api_data->sections = (array) $this->api_data->sections;
 
 			return $this->api_data;
 		}
