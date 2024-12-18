@@ -58,14 +58,25 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				if ( is_wp_error( $response ) ) {
 					return $response;
 				}
-				set_site_transient( "git-updater-lite_{$this->file}", $response, 6 * \HOUR_IN_SECONDS );
-			}
 
 				$this->api_data = (object) json_decode( wp_remote_retrieve_body( $response ), true );
-			if ( null === $this->api_data ) {
-				return new \WP_Error( 'non_json_api_response', 'Poorly formed JSON', $response );
+				if ( null === $this->api_data ) {
+					return new \WP_Error( 'non_json_api_response', 'Poorly formed JSON', $response );
+				}
+				$this->api_data->file = $this->file;
+
+				/*
+				* Set transient for 5 minutes if using a release asset
+				* as AWS sets 5 minute timeout for release asset redirect.
+				* Otherwise use 6 hours.
+				*/
+				$timeout = $this->api_data->release_asset ? 300 : 6 * \HOUR_IN_SECONDS;
+
+				set_site_transient( "git-updater-lite_{$this->file}", $this->api_data, $timeout );
+			} else {
+				$this->api_data = $response;
 			}
-			$this->api_data->file = $this->file;
+
 			$this->load_hooks();
 		}
 
