@@ -37,7 +37,7 @@ add_filter( 'gul_update_server', function () {
     return '<update server URI>';
 });
 
-require_once __DIR__ . '/vendor/afragen/git-updater-lite/Lite.php';
+require_once __DIR__ . '/vendor/autoload.php';
 ( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
 ```
 
