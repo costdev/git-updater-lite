@@ -38,7 +38,7 @@ add_filter( 'gul_update_server', function () {
 });
 
 require_once __DIR__ . '/vendor/afragen/git-updater-lite/Lite.php';
-( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run('<URI>');
+( new \Fragen\Git_Updater\Lite( __FILE__ ) )->run();
 ```
 
 An example integrated plugin is here, https://github.com/afragen/test-plugin-gu-lite
