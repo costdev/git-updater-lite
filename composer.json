@@ -27,5 +27,10 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.0"
+  },
+  "autoload": {
+    "classmap": [
+      "Lite.php"
+    ]
   }
 }
