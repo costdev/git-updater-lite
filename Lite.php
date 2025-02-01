@@ -219,6 +219,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 			$response = array(
 				'slug'                => $this->api_data->slug,
 				$this->api_data->type => 'theme' === $this->api_data->type ? $this->api_data->slug : $this->api_data->file,
+				'url'                 => isset( $this->api_data->url ) ? $this->api_data->url : $this->api_data->slug,
 				'icons'               => (array) $this->api_data->icons,
 				'banners'             => $this->api_data->banners,
 				'branch'              => $this->api_data->branch,
@@ -227,6 +228,9 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				'requires'            => $this->api_data->requires,
 				'requires_php'        => $this->api_data->requires_php,
 			);
+			if ( 'theme' === $this->api_data->type ) {
+				$response['theme_uri'] = $response['url'];
+			}
 
 			if ( version_compare( $this->api_data->version, $this->local_version, '>' ) ) {
 				$response_api_checked        = array(
@@ -280,7 +284,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		public function customize_theme_update_html( $prepared_themes ) {
 			$theme = $this->api_data;
 
-			if ( 'theme' !==$theme->type){
+			if ( 'theme' !== $theme->type ) {
 				return $prepared_themes;
 			}
 
