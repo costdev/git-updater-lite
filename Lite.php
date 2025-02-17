@@ -286,7 +286,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 *
 		 * @param array $prepared_themes Array of prepared themes.
 		 *
-		 * @return mixed
+		 * @return array
 		 */
 		public function customize_theme_update_html( $prepared_themes ) {
 			$theme = $this->api_data;
