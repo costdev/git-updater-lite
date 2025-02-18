@@ -81,7 +81,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				return;
 			}
 
-			if ( null === $this->update_server ) {
+			if ( empty( $this->update_server ) ) {
 				return new \WP_Error( 'no_domain', 'No update server domain' );
 			}
 			$url      = "$this->update_server/wp-json/git-updater/v1/update-api/?slug=$this->slug";
@@ -310,6 +310,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 * @author Seth Carstens
 		 *
 		 * @access protected
+		 * @codeCoverageIgnore
 		 *
 		 * @param \stdClass $theme Theme object.
 		 *

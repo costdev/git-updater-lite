@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+.vscode
+
+vendor
+phpcs.xml
+phpunit.xml
+tests/phpunit/cache
+tests/phpunit/coverage
+.phpunit.result.cache
