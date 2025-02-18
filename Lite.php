@@ -310,6 +310,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 * @author Seth Carstens
 		 *
 		 * @access protected
+		 * @codeCoverageIgnore
 		 *
 		 * @param \stdClass $theme Theme object.
 		 *
