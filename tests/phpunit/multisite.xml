@@ -1,0 +1,37 @@
+<phpunit
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.2/phpunit.xsd"
+		bootstrap="./bootstrap.php"
+		backupGlobals="false"
+		colors="true"
+		beStrictAboutTestsThatDoNotTestAnything="true"
+		beStrictAboutOutputDuringTests="true"
+		convertErrorsToExceptions="true"
+		convertWarningsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertDeprecationsToExceptions="true"
+		>
+	<php>
+		<const name="WP_TESTS_MULTISITE" value="1" />
+	</php>
+	<testsuites>
+		<!-- Default test suite to run all tests. -->
+		<testsuite name="default">
+			<directory suffix=".php">./tests</directory>
+		</testsuite>
+	</testsuites>
+	<groups>
+		<exclude>
+			<group>ms-excluded</group>
+		</exclude>
+	</groups>
+	<coverage includeUncoveredFiles="true" processUncoveredFiles="false" pathCoverage="false" cacheDirectory="./cache">
+		<include>
+			<file>../../Lite.php</file>
+		</include>
+		<report>
+			<text outputFile="php://stdout" showOnlySummary="true"/>
+			<html outputDirectory="./coverage/html/multisite"/>
+		</report>
+	</coverage>
+</phpunit>

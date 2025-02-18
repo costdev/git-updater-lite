@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="tests/phpunit/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite name="git-updater-lite">
+			<directory suffix=".php">./tests/phpunit/tests/</directory>
+		</testsuite>
+	</testsuites>
+	<groups>
+		<exclude>
+			<group>ms-required</group>
+		</exclude>
+	</groups>
+	<coverage includeUncoveredFiles="true" processUncoveredFiles="false" pathCoverage="false" cacheDirectory="./tests/phpunit/cache">
+		<include>
+			<file>./Lite.php</file>
+		</include>
+		<report>
+			<text outputFile="php://stdout" showOnlySummary="true"/>
+			<html outputDirectory="./tests/phpunit/coverage/html/single-site"/>
+		</report>
+	</coverage>
+</phpunit>
