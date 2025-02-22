@@ -69,16 +69,15 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 		 *
 		 * @param string $updateUri Data from Update URI header.
 		 *
-		 * @return string
+		 * @return string|\WP_Error
 		 */
 		private function check_update_uri( $updateUri ) {
-			if ( ! empty( $updateUri )
-				&& filter_var( $updateUri, FILTER_VALIDATE_URL )
+			if ( filter_var( $updateUri, FILTER_VALIDATE_URL )
 				&& null === parse_url( $updateUri, PHP_URL_PATH ) // null means no path is present.
 			) {
 				$updateUri = untrailingslashit( trim( $updateUri ) );
 			} else {
-				$updateUri = '';
+				return new \WP_Error( 'poorly_formed_header_data', 'Poorly formed data from Update URI header', $updateUri );
 			}
 
 			return $updateUri;
@@ -101,8 +100,8 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				return;
 			}
 
-			if ( empty( $this->update_server ) ) {
-				return new \WP_Error( 'no_domain', 'No update server domain' );
+			if ( empty( $this->update_server ) || is_wp_error( $this->update_server ) ) {
+				return new \WP_Error( 'bad_domain', 'Bad update server domain', $this->update_server );
 			}
 			$url      = "$this->update_server/wp-json/git-updater/v1/update-api/?slug=$this->slug";
 			$response = get_site_transient( "git-updater-lite_{$this->file}" );
@@ -122,7 +121,7 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				* Set transient for 5 minutes as AWS sets 5 minute timeout
 				* for release asset redirect.
 				*
-				* Set limited timeout so wp_remote_get() not hit as frequently.
+				* Set limited timeout so wp_remote_post() not hit as frequently.
 				* wp_remote_post() for plugin/theme check can run on every pageload
 				* for certain pages.
 				*/
