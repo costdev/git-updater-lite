@@ -61,7 +61,27 @@ if ( ! class_exists( 'Fragen\\Git_Updater\\Lite' ) ) {
 				)
 			);
 			$this->local_version = $file_data['Version'];
-			$this->update_server = $file_data['UpdateURI'];
+			$this->update_server = $this->check_update_uri( $file_data['UpdateURI'] );
+		}
+
+		/**
+		 * Ensure properly formatted Update URI.
+		 *
+		 * @param string $updateUri Data from Update URI header.
+		 *
+		 * @return string
+		 */
+		private function check_update_uri( $updateUri ) {
+			if ( ! empty( $updateUri )
+				&& filter_var( $updateUri, FILTER_VALIDATE_URL )
+				&& null === parse_url( $updateUri, PHP_URL_PATH ) // null means no path is present.
+			) {
+				$updateUri = untrailingslashit( trim( $updateUri ) );
+			} else {
+				$updateUri = '';
+			}
+
+			return $updateUri;
 		}
 
 		/**
