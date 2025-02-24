@@ -115,14 +115,29 @@ class Lite_ConstructTest extends GitUpdater_UnitTestCase {
 	 *
 	 * @dataProvider data_file_paths_and_servers
 	 *
-	 * @param string $file_path The file path.
-	 * @param string $server   The expected server.
+	 * @param string          $file_path The file path.
+	 * @param string|WP_Error $expected   The expected server, or WP_Error object.
 	 */
-	public function test_should_set_local_server_property( $file_path, $server ) {
-		$this->assertSame(
-			$server,
-			$this->get_property_value( new \Fragen\Git_Updater\Lite( $file_path ), 'update_server' )
-		);
+	public function test_should_set_update_server_property( $file_path, $expected ) {
+		$actual = $this->get_property_value( new \Fragen\Git_Updater\Lite( $file_path ), 'update_server' );
+		if ( $expected instanceof WP_Error ) {
+			$this->assertWPError(
+				$actual,
+				'The update_server property was not set to a WP_Error object .'
+			);
+
+			$this->assertSame(
+				$expected->get_error_code(),
+				'invalid_header_data',
+				"The update_server property's error code is incorrect."
+			);
+		} else {
+			$this->assertSame(
+				$expected,
+				$actual,
+				'The update_server property was not set to the expected value.'
+			);
+		}
 	}
 
 	/**
@@ -134,19 +149,19 @@ class Lite_ConstructTest extends GitUpdater_UnitTestCase {
 		return array(
 			'a theme'                        => array(
 				'file_path' => $this->test_files['theme'],
-				'server'    => 'https://github.com/afragen/git-updater-lite/my-theme',
+				'expected'  => 'https://my-theme.com',
 			),
 			'a plugin'                       => array(
 				'file_path' => $this->test_files['plugin'],
-				'server'    => 'https://github.com/afragen/git-updater-lite/my-plugin',
+				'expected'  => 'https://my-plugin.com',
 			),
 			'a theme with no update server'  => array(
 				'file_path' => $this->test_files['theme_no_server'],
-				'server'    => '',
+				'expected'  => new WP_Error( 'invalid_header_data' ),
 			),
 			'a plugin with no update server' => array(
 				'file_path' => $this->test_files['plugin_no_server'],
-				'server'    => '',
+				'expected'  => new WP_Error( 'invalid_header_data' ),
 			),
 		);
 	}

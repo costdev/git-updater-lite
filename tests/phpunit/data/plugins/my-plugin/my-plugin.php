@@ -6,5 +6,5 @@
  * Author URI:  https://github.com/afragen/git-updater-lite
  * License:     MIT
  * Version:     1.0.2
- * Update URI:  https://github.com/afragen/git-updater-lite/my-plugin
+ * Update URI:  https://my-plugin.com
  */
