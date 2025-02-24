@@ -134,11 +134,11 @@ class Lite_ConstructTest extends GitUpdater_UnitTestCase {
 		return array(
 			'a theme'                        => array(
 				'file_path' => $this->test_files['theme'],
-				'server'    => 'https://github.com/afragen/git-updater-lite/my-theme',
+				'server'    => 'https://my-theme.com',
 			),
 			'a plugin'                       => array(
 				'file_path' => $this->test_files['plugin'],
-				'server'    => 'https://github.com/afragen/git-updater-lite/my-plugin',
+				'server'    => 'https://my-plugin.com',
 			),
 			'a theme with no update server'  => array(
 				'file_path' => $this->test_files['theme_no_server'],
